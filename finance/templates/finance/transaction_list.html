@@ -1,0 +1,50 @@
+{% extends "finance/base.html" %}
+
+{% block title %}Transaction List{% endblock title %}
+
+{% block content %}
+<h1 class="text-2xl font-bold mb-6 text-indigo-600">Transaction List</h1>
+
+<div class="overflow-x-auto">
+  <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+    <thead class="bg-indigo-600 text-white">
+      <tr>
+        <th class="px-6 py-3 text-left text-sm font-semibold">ID</th>
+        <th class="px-6 py-3 text-left text-sm font-semibold">Title</th>
+        <th class="px-6 py-3 text-left text-sm font-semibold">Amount</th>
+        <th class="px-6 py-3 text-left text-sm font-semibold">Type</th>
+        <th class="px-6 py-3 text-left text-sm font-semibold">Date</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200">
+      {% for i in transactions %}
+      <tr class="hover:bg-gray-100">
+        <td class="px-6 py-4 text-sm text-gray-700">{{ i.id }}</td>
+        <td class="px-6 py-4 text-sm text-gray-700">{{ i.title }}</td>
+        <td class="px-6 py-4 text-sm font-medium 
+                   {% if i.transaction_type == 'Income' %} text-green-600 {% else %} text-red-600 {% endif %}">
+          {{ i.amount }}
+        </td>
+        <td class="px-6 py-4 text-sm">
+          <span class="px-2 inline-flex text-xs font-semibold rounded-full
+                       {% if i.transaction_type == 'Income' %}
+                         bg-green-100 text-green-800
+                       {% else %}
+                         bg-red-100 text-red-800
+                       {% endif %}">
+            {{ i.transaction_type }}
+          </span>
+        </td>
+        <td class="px-6 py-4 text-sm text-gray-700">{{ i.date }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5" class="px-6 py-4 text-center text-gray-500">No transactions found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}
+
+
