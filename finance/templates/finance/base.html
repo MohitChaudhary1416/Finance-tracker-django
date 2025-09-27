@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>{% block title %}{% endblock title %}</title>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-indigo-500 p-4 text-white">
+        {% if user.is_authenticated %}
+        <!-- <a href="{% url 'transaction-add' %}">Add Transaction</a> -->
+        <form id="logout-form" action="{% url 'logout' %}"
+        method="POST" style="display: inline;">
+        {% csrf_token %}
+        <a href="#" onclick="document.getElementById('logout-form').submit();" class="ml-4">Logout</a>
+        </form>
+        <a href="{% url 'transaction-add' %}">Add Transaction</a>
+        {% else %}
+        <a href="{% url 'login' %}" class="ml-4">Login</a>
+        <a href="{% url 'register' %}" class="ml-4">Register</a>
+        {% endif %}
+
+    </nav>
+
+    
+{% block content %}{% endblock content%}
+</body>
+</html>

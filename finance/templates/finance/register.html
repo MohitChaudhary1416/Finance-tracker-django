@@ -1,0 +1,73 @@
+{% extends "finance/base.html" %}
+{% block title %}Register{% endblock title %}
+{% block content %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+  <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-lg">
+    <h1 class="text-2xl font-bold text-indigo-600 text-center mb-6">Create an Account</h1>
+
+    <form action="#" method="POST" class="space-y-4">
+        {% csrf_token %}
+      <div class="flex items-center">
+        <label for="id_username" class="w-32 text-gray-700 font-semibold">Username</label>
+        <input 
+          type="text" id="id_username" name="username" required
+          placeholder="Enter your username"
+          class="flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+          focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+        {% if form.username.errors %}
+          <p class="text-red-500 text-sm mt-1">{{form.username.errors.0}}</p>
+        {% endif %}
+      </div>
+      <div class="flex items-center">
+        <label for="id_email" class="w-32 text-gray-700 font-semibold">Email</label>
+        <input 
+          type="email" id="id_email" name="email" required
+          placeholder="Enter your email"
+          class="flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+        {% if form.email.errors %}
+            <p class="text-red-500 text-sm mt-1">{{ form.email.errors.0 }}</p>
+        {% endif %}        
+      </div>
+      <div class="flex items-center">
+        <label for="id_password1" class="w-32 text-gray-700 font-semibold">Password</label>
+        <input 
+          type="password" id="id_password1" name="password1" required
+          placeholder="Enter password"
+          class="flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+        {% if form.password1.errors %}
+            <p class="text-red-500 text-sm mt-1">{{ form.password1.errors.0 }}</p>
+    {% endif %}
+      </div>
+      <div class="flex items-center">
+        <label for="id_password2" class="w-32 text-gray-700 font-semibold">Confirm</label>
+        <input 
+          type="password" id="id_password2" name="password2" required
+          placeholder="Confirm password"
+          class="flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        >
+      </div>
+      <div class="flex justify-end">
+        <button type="submit"
+          class="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg 
+                 shadow hover:bg-indigo-700 transition">
+          Register
+        </button>
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>
+{% endblock content %}
