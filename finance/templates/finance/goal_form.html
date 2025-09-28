@@ -1,0 +1,54 @@
+{% extends "finance/base.html" %}
+
+{% block title %}Add Goal{% endblock title %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-10 bg-white p-6 rounded-lg shadow-lg">
+  <h1 class="text-3xl font-bold text-indigo-600 mb-6 text-center">Add Goal</h1>
+
+  <form method="POST" class="space-y-5">
+    {% csrf_token %}
+
+    <!-- Goal Name -->
+    <div>
+      <label class="block text-gray-700 font-semibold mb-1">Goal Name</label>
+      <input type="text" name="name" value="{{ form.name.value }}" 
+             class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500" />
+      {% if form.name.errors %}
+        <p class="text-red-500 text-sm mt-1">{{ form.name.errors.0 }}</p>
+      {% endif %}
+    </div>
+
+    <!-- Target Amount -->
+    <div>
+      <label class="block text-gray-700 font-semibold mb-1">Target Amount</label>
+      <input type="number" name="target_amount" value="{{ form.target_amount.value }}" step="0.01"
+             class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500" />
+      {% if form.target_amount.errors %}
+        <p class="text-red-500 text-sm mt-1">{{ form.target_amount.errors.0 }}</p>
+      {% endif %}
+    </div>
+
+
+    <!-- Deadline -->
+    <div>
+      <label class="block text-gray-700 font-semibold mb-1">Deadline</label>
+      <input type="date" name="deadline" value="{{ form.deadline.value }}"
+             class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500" />
+      {% if form.deadline.errors %}
+        <p class="text-red-500 text-sm mt-1">{{ form.deadline.errors.0 }}</p>
+      {% endif %}
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-between mt-6">
+      <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+        Save Goal
+      </button>
+      <a href="{% url 'dashboard' %}" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+        Back
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock content %}

@@ -1,6 +1,92 @@
 {% extends "finance/base.html" %}
+
 {% block title %}Dashboard{% endblock title %}
 
-{% block content%}
-<h1>Dashboard</h1>
+{% block content %}
+<div class="max-w-6xl mx-auto mt-10">
+
+  <!-- Summary Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+    <div class="bg-blue-100 p-4 rounded shadow text-center">
+      <h2 class="text-gray-700 font-semibold">Total Income</h2>
+      <p class="text-xl font-bold text-blue-700">${{ total_income }}</p>
+    </div>
+    <div class="bg-red-100 p-4 rounded shadow text-center">
+      <h2 class="text-gray-700 font-semibold">Total Expense</h2>
+      <p class="text-xl font-bold text-red-700">${{ total_expense }}</p>
+    </div>
+    <div class="bg-green-100 p-4 rounded shadow text-center">
+      <h2 class="text-gray-700 font-semibold">Net Savings</h2>
+      <p class="text-xl font-bold text-green-700">${{ net_saving }}</p>
+    </div>
+  </div>
+
+  <!-- Add New Goal Button -->
+  <div class="mb-6 text-right">
+    <a href="{% url 'add-goal' %}" 
+       class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">
+       Add New Goal
+    </a>
+  </div>
+
+  <!-- Your Goals -->
+  <div>
+    <h2 class="text-xl font-bold mb-4 text-indigo-600">Your Goals</h2>
+    {% if goal_progress %}
+      {% for g in goal_progress %}
+      <div class="mb-4">
+        <div class="flex justify-between mb-1">
+          <span class="font-medium text-gray-700">{{ g.goal.name }}</span>
+          <span class="text-sm text-gray-600">{{ g.progress|floatformat:0 }}%</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded h-4">
+          <div class="bg-indigo-600 h-4 rounded"></div>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-gray-500">You have no goals yet.</p>
+    {% endif %}
+  </div>
+
+  <!-- Optional: Transactions Table -->
+  <div class="mt-8">
+    <h2 class="text-xl font-bold mb-4 text-indigo-600">Recent Transactions</h2>
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white rounded shadow">
+        <thead class="bg-indigo-600 text-white">
+          <tr>
+            <th class="px-4 py-2 text-left">ID</th>
+            <th class="px-4 py-2 text-left">Title</th>
+            <th class="px-4 py-2 text-left">Amount</th>
+            <th class="px-4 py-2 text-left">Type</th>
+            <th class="px-4 py-2 text-left">Date</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          {% for t in transactions %}
+          <tr class="hover:bg-gray-100">
+            <td class="px-4 py-2">{{ t.id }}</td>
+            <td class="px-4 py-2">{{ t.title }}</td>
+            <td class="px-4 py-2 {% if t.transaction_type == 'Income' %}text-blue-700{% else %}text-red-600{% endif %}">
+              ${{ t.amount }}
+            </td>
+            <td class="px-4 py-2">
+              <span class="px-2 py-1 rounded-full text-sm {% if t.transaction_type == 'Income' %}bg-blue-100 text-blue-800{% else %}bg-red-100 text-red-800{% endif %}">
+                {{ t.transaction_type }}
+              </span>
+            </td>
+            <td class="px-4 py-2">{{ t.date }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="px-4 py-2 text-center text-gray-500">No transactions found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
 {% endblock content %}
